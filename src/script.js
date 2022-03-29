@@ -4,6 +4,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import * as dat from 'dat.gui'
 
+const gltfloader = new GLTFLoader()
+
 // Debug
 const gui = new dat.GUI()
 
@@ -13,24 +15,30 @@ const canvas = document.querySelector('canvas.webgl')
 // Scene
 const scene = new THREE.Scene()
 
-// Objects
-const geometry = new THREE.TorusGeometry(0.7, 0.2, 16, 100)
+//earth
+gltfloader.load('earthpolycartest.glb', (gltf) => {
+  scene.add(gltf.scene)
+  gui.add(gltf.scene.rotation, 'y').min(0).max(9)
+})
 
-// Materials
+// // Objects
+// const geometry = new THREE.TorusGeometry(0.7, 0.2, 16, 100)
 
-const material = new THREE.MeshBasicMaterial()
-material.color = new THREE.Color(0xff0000)
+// // Materials
 
-// Mesh
-const sphere = new THREE.Mesh(geometry, material)
-scene.add(sphere)
+// const material = new THREE.MeshBasicMaterial()
+// material.color = new THREE.Color(0xff0000)
+
+// // Mesh
+// const sphere = new THREE.Mesh(geometry, material)
+// scene.add(sphere)
 
 // Lights
 
-const pointLight = new THREE.PointLight(0xffffff, 0.1)
+const pointLight = new THREE.PointLight(0xffffff, 5)
 pointLight.position.x = 2
 pointLight.position.y = 3
-pointLight.position.z = 4
+pointLight.position.z = 40
 scene.add(pointLight)
 
 /**
@@ -62,7 +70,7 @@ window.addEventListener('resize', () => {
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
 camera.position.x = 0
 camera.position.y = 0
-camera.position.z = 2
+camera.position.z = 30
 scene.add(camera)
 
 // Controls
@@ -74,6 +82,7 @@ scene.add(camera)
  */
 const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
+  alpha: true,
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
@@ -88,7 +97,7 @@ const tick = () => {
   const elapsedTime = clock.getElapsedTime()
 
   // Update objects
-  sphere.rotation.y = 0.5 * elapsedTime
+  //sphere.rotation.y = 0.5 * elapsedTime
 
   // Update Orbital Controls
   // controls.update()
