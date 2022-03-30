@@ -15,6 +15,8 @@ const canvas = document.querySelector('canvas.webgl')
 // Scene
 const scene = new THREE.Scene()
 
+console.log('test1')
+
 //earth
 gltfloader.load('earthpolycartest.glb', (gltf) => {
   scene.add(gltf.scene)
@@ -77,6 +79,8 @@ scene.add(camera)
 // const controls = new OrbitControls(camera, canvas)
 // controls.enableDamping = true
 
+console.log('test2')
+
 /**
  * Renderer
  */
@@ -101,6 +105,8 @@ const tick = () => {
 
   // Update Orbital Controls
   // controls.update()
+  
+  console.log('test3')
 
   // Render
   renderer.render(scene, camera)
