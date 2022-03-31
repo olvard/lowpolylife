@@ -1,20 +1,41 @@
-*
-{
+* {
     margin: 0;
     padding: 0;
 }
 
-html,
-body
-{
+html, body {
     height: 100vh;
-    font-family: 'Poppins';
+    font-family: sans-serif;
+    color: white;
+
+
+    background: radial-gradient(#4291c5, #09516b);
+	background-size: 400% 400%;
+	animation: gradient 5s ease infinite;
+    background-repeat: no-repeat;
 }
 
-.webgl
-{
+.webgl {
     position: fixed;
     top: 0;
     left: 0;
     outline: none;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 50pt;
+    font-size: 42pt;
+}
+
+@keyframes gradient {
+	0% {
+		background-size: 100%;
+	}
+	50% {
+		background-size: 150%;
+	}
+    100% {
+		background-size: 100%;
+	}
 }
