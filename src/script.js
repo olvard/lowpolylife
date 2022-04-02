@@ -65,9 +65,9 @@ gltfloader.load('sat.glb', (sat) => {
 
 // Lights
 const pointLight = new THREE.PointLight(0xffffff, 3)
-pointLight.position.x = 20
-pointLight.position.y = 1
-pointLight.position.z = 40
+pointLight.position.x = 80
+pointLight.position.y = 100
+pointLight.position.z = 80
 scene.add(pointLight)
 
 // Sizes
@@ -95,7 +95,7 @@ window.addEventListener('resize', () => {
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
 camera.position.x = 0
 camera.position.y = 0
-camera.position.z = 30
+camera.position.z = 60
 scene.add(camera)
 
 // Renderer
@@ -110,10 +110,11 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
 const tick = () => {
 
-  var orbitRadius = 16; 
+  var orbitRadius = 20; 
+  var orbitRadiusmoon = 30;
 
   var orbit;
-  orbit = Date.now() * 0.0001;
+  orbit = Date.now() * 0.001;
 
  if(globalEarth && globalSat && globalCloud && globalCloud2 && globalMoon){
 
@@ -121,22 +122,18 @@ const tick = () => {
   globalEarth.rotation.z += 0.001; 
 
   // Moon
-  globalMoon.rotation.z += 0.001;
-  globalMoon.position.set(Math.sin(orbit*0.9) * orbitRadius, 0 , 0); 
+  globalMoon.rotation.z += 0.01;
+  globalMoon.position.set(1.2*Math.cos(orbit) * orbitRadiusmoon, 0 , 1.2*Math.sin(orbit) * orbitRadiusmoon); 
 
   // Sat
   globalSat.rotation.x += 0.01; 
-  globalSat.position.set(Math.cos(orbit*1.3) * orbitRadius, Math.sin(orbit*1.3) * orbitRadius , 0);
+  globalSat.position.set(Math.cos(orbit*1.3) * orbitRadius, Math.sin(orbit*1.3) * orbitRadius , orbitRadius, Math.sin(orbit*1.3) * orbitRadius );
 
   // Cloud
-  //globalCloud.rotation.x += 0.01; 
-  globalCloud.rotation.x += 0.01; 
-  globalCloud.position.set(Math.cos(orbit*1.1) * orbitRadius, Math.sin(orbit*1.1) * orbitRadius , 0);
+  globalCloud.position.set(0.7*Math.cos(orbit*1.1) * orbitRadius, 0.7*Math.sin(orbit*1.1) * orbitRadius , 0);
 
   // Cloud 2
-  //globalCloud2.rotation.x += 0.01; 
-  globalCloud2.rotation.x += 0.01; 
-  globalCloud2.position.set(Math.cos(orbit*1.15) * orbitRadius, Math.sin(orbit*1.15) * orbitRadius , 0);
+  globalCloud2.position.set(0.7*Math.cos(orbit*1.15) * orbitRadius, 0.7*Math.sin(orbit*1.15) * orbitRadius , 0);
 
 }
 
