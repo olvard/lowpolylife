@@ -23,9 +23,20 @@ gltfloader.load('Earth.glb', (earth) => {
  scene.add(object)
 })
 
+//Sun
+let globalSun; // Global så tick hittar skiten
+gltfloader.load('Sun.glb', (sun) => {
+ let object = sun.scene
+ globalSun = object
+ object.position.set(0,-8,-13)
+ object.rotation.set(8,4,1)
+ scene.add(object)
+})
+
+
 //moon
 let globalMoon; 
-gltfloader.load('Moon2.glb', (moon) => {
+gltfloader.load('Moon4.glb', (moon) => {
  let object = moon.scene
  globalMoon = object
    object.position.set(4,16,-10)
@@ -38,8 +49,8 @@ let globalCloud;
 gltfloader.load('cloud.glb', (cloud) => {
    let object = cloud.scene
    globalCloud = object
-   object.position.set(4,16,-10)
-   object.rotation.set(10,8,10)
+   object.position.set(4,16,-13)
+   object.rotation.set(0,0,0)
    scene.add(object)
  })
 
@@ -48,8 +59,8 @@ let globalCloud2;
 gltfloader.load('cloud.glb', (cloud2) => {
    let object = cloud2.scene
    globalCloud2 = object
-   object.position.set(-15,12,-10)
-   object.rotation.set(0,0,3)
+   object.position.set(-15,12,-13)
+   object.rotation.set(3,6,3)
    scene.add(object)
  })
 
@@ -58,17 +69,20 @@ let globalSat;
 gltfloader.load('sat.glb', (sat) => {
    let object = sat.scene
    globalSat = object
-   object.position.set(-20,-5,-10)
+   object.position.set(-20,-5,-12)
    object.rotation.set(0,0,7)
    scene.add(object)
  })
 
 // Lights
-const pointLight = new THREE.PointLight(0xffffff, 3)
+const pointLight = new THREE.PointLight(0xffffff, 4)
 pointLight.position.x = 80
 pointLight.position.y = 100
 pointLight.position.z = 80
 scene.add(pointLight)
+
+const ambientLight = new THREE.AmbientLight(0x404040, 4); // soft white light
+scene.add( ambientLight );
 
 // Sizes
 const sizes = {
@@ -112,9 +126,16 @@ const tick = () => {
 
   var orbitRadius = 20; 
   var orbitRadiusmoon = 30;
+  var orbitRadiusSun = 40;
 
-  var orbit;
-  orbit = Date.now() * 0.001;
+  var orbitsat;
+  var orbitmoon;
+  var orbitcloud;
+  var orbitsun;
+  orbitsat = Date.now() * 0.0001;
+  orbitmoon = Date.now() * 0.0001;
+  orbitcloud = Date.now() * 0.0001;
+  orbitsun = Date.now() * 0.001;
 
  if(globalEarth && globalSat && globalCloud && globalCloud2 && globalMoon){
 
@@ -123,17 +144,24 @@ const tick = () => {
 
   // Moon
   globalMoon.rotation.z += 0.01;
-  globalMoon.position.set(1.2*Math.cos(orbit) * orbitRadiusmoon, 0 , 1.2*Math.sin(orbit) * orbitRadiusmoon); 
+  globalMoon.rotation.x += 0.01;
+  globalMoon.position.set(1.2*Math.cos(orbitmoon) * orbitRadiusmoon, 0 , 1.2*Math.sin(orbitmoon) * orbitRadiusmoon); 
 
   // Sat
   globalSat.rotation.x += 0.01; 
-  globalSat.position.set(Math.cos(orbit*1.3) * orbitRadius, Math.sin(orbit*1.3) * orbitRadius , orbitRadius, Math.sin(orbit*1.3) * orbitRadius );
+  globalSat.position.set(Math.cos(orbitsat*1.3) * orbitRadius, Math.sin(orbitsat*1.3) * orbitRadius , orbitRadius, Math.sin(orbitsat*1.3) * orbitRadius );
 
   // Cloud
-  globalCloud.position.set(0.7*Math.cos(orbit*1.1) * orbitRadius, 0.7*Math.sin(orbit*1.1) * orbitRadius , 0);
+  globalCloud.rotation.z *= 0.0012;
+  globalCloud.position.set(0.7*Math.cos(orbitcloud*1.1) * orbitRadius, 0.7*Math.sin(orbitcloud*1.1) * orbitRadius , 0);
 
   // Cloud 2
-  globalCloud2.position.set(0.7*Math.cos(orbit*1.15) * orbitRadius, 0.7*Math.sin(orbit*1.15) * orbitRadius , 0);
+  globalCloud2.position.set(Math.cos(orbitcloud*1.15) * orbitRadius, 0, Math.sin(orbitcloud*1.15) * orbitRadius);
+
+  // Sun rotation & Light rotation
+  globalSun.position.set(Math.cos(orbitsun) * orbitRadiusSun, 0 , Math.sin(orbitsun) * orbitRadiusSun); 
+  
+  pointLight.position.set(Math.cos(orbitsun) * orbitRadiusSun, 0 , Math.sin(orbitsun) * orbitRadiusSun); 
 
 }
 
