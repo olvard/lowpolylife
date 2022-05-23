@@ -1,23 +1,85 @@
-*
-{
+* {
     margin: 0;
     padding: 0;
 }
 
-html,
-body
-{
+html, body {
     height: 100vh;
-    font-family: 'Poppins';
+    font-family: sans-serif;
+    color: white;
+
+
+    background: radial-gradient(#4291c5, #09516b);
+	background-size: 400% 400%;
+	animation: gradient 5s ease infinite;
+    background-repeat: no-repeat;
 }
 
-.webgl
-{
+.webgl {
     position: fixed;
     top: 0;
     left: 0;
     outline: none;
 }
 
+h1 {
+    text-align: center;
+    margin-top: 50pt;
+    font-size: 30pt;
+}
+
+h2 {
+
+  text-align: center;
+    font-size: 25pt;
+
+}
+
+h3 {
+
+  text-align: center;
+    font-size: 15pt;
+
+}
+
+@keyframes gradient {
+	0% {
+		background-size: 100%;
+	}
+	50% {
+		background-size: 150%;
+	}
+    100% {
+		background-size: 100%;
+	}
+}
+
+/* Add a black background color to the top navigation */
+.topnav {
+  background-color: black;
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+  float: left;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: white;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: green;
+  color: white;
+}
 
 /*# sourceMappingURL=main.css.map*/
